@@ -7,13 +7,15 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pe.com.test.R
-import pe.com.test.data.datasource.remote.api.ApiManager
+import pe.com.test.data.datasource.remote.api.MovieApi
 import pe.com.test.data.datasource.remote.entity.MoviePopular
 import pe.com.test.data.datasource.remote.entity.MovieUpcoming
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor() : ViewModel() {
+class MovieListViewModel @Inject constructor(
+    private val movieApi: MovieApi
+) : ViewModel() {
 
     private val _popularMovies = MutableLiveData<List<MoviePopular?>>()
     val popularMovies: LiveData<List<MoviePopular?>>
@@ -31,7 +33,7 @@ class MovieListViewModel @Inject constructor() : ViewModel() {
         if (popularMovies.value.isNullOrEmpty()) {
             viewModelScope.launch {
                 val response =
-                    ApiManager.get().popularMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
+                    movieApi.popularMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
                 if (response.isSuccessful) {
                     response.body()?.results?.let {
                         _popularMovies.value = it
@@ -49,8 +51,7 @@ class MovieListViewModel @Inject constructor() : ViewModel() {
         if (upcomingMovies.value.isNullOrEmpty()) {
             viewModelScope.launch {
                 val response =
-                    ApiManager.get()
-                        .upcomingMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
+                    movieApi.upcomingMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
                 if (response.isSuccessful) {
                     response.body()?.results?.let {
                         _upcomingMovies.value = it

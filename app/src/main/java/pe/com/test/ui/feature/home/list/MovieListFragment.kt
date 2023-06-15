@@ -11,9 +11,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import pe.com.test.R
 import pe.com.test.databinding.FragmentMovieListBinding
 
+@AndroidEntryPoint
 class MovieListFragment : Fragment() {
 
     private var _binding: FragmentMovieListBinding? = null
