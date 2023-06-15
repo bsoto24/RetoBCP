@@ -20,9 +20,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment_content_main, MovieListFragment()).commit()
-
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
