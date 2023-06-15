@@ -1,25 +1,27 @@
-package pe.com.test
+package pe.com.test.ui.feature.home
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import pe.com.test.databinding.ActivityMainBinding
+import pe.com.test.ui.feature.home.list.MovieListFragment
+import pe.com.test.R
+import pe.com.test.databinding.ActivityHomeBinding
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment_content_main, FirstFragment()).commit()
+            .replace(R.id.nav_host_fragment_content_main, MovieListFragment()).commit()
 
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

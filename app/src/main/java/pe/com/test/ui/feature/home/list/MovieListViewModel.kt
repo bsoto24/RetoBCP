@@ -1,4 +1,4 @@
-package pe.com.test
+package pe.com.test.ui.feature.home.list
 
 import android.annotation.SuppressLint
 import android.app.Application
@@ -6,8 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import pe.com.test.data.datasource.remote.api.ApiManager
+import pe.com.test.R
+import pe.com.test.data.datasource.remote.entity.MoviePopular
+import pe.com.test.data.datasource.remote.entity.MovieUpcoming
 
-class MyViewModel(application: Application) : AndroidViewModel(application) {
+class MovieListViewModel(application: Application) : AndroidViewModel(application) {
 
     val data = MutableLiveData<List<MoviePopular?>>()
     val movieUpcoming = MutableLiveData<List<MovieUpcoming?>>()
@@ -26,7 +30,8 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
                 error.value = context.getString(R.string.errorSearch)
             }
 
-            val movieUpcomingResponse = ApiManager.get().upcomingMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
+            val movieUpcomingResponse = ApiManager.get()
+                .upcomingMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
             if (response.isSuccessful) {
                 movieUpcoming.value = movieUpcomingResponse.body()!!.results
             } else {

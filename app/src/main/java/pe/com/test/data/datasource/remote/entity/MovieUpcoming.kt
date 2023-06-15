@@ -1,8 +1,8 @@
-package pe.com.test
+package pe.com.test.data.datasource.remote.entity
 
 import com.google.gson.annotations.SerializedName
 
-class MoviePopular(
+class MovieUpcoming(
     val popularity: Double,
     @SerializedName("vote_count") val voteCount: Int,
     val video: Boolean,

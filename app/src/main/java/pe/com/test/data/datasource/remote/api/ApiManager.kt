@@ -1,7 +1,9 @@
-package pe.com.test
+package pe.com.test.data.datasource.remote.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import pe.com.test.data.datasource.remote.entity.MoviePopularBase
+import pe.com.test.data.datasource.remote.entity.MovieUpcomingBase
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

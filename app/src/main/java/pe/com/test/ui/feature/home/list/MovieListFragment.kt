@@ -1,4 +1,4 @@
-package pe.com.test
+package pe.com.test.ui.feature.home.list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import pe.com.test.databinding.FragmentFirstBinding
+import pe.com.test.databinding.FragmentMovieListBinding
 
-class FirstFragment : Fragment() {
+class MovieListFragment : Fragment() {
 
-    private var binding: FragmentFirstBinding? = null
-    var view_model: MyViewModel? = null
-    var adapterUpcoming = AdapterMovieUpcoming()
+    private var binding: FragmentMovieListBinding? = null
+    var view_model: MovieListViewModel? = null
+    var adapterUpcoming = MovieUpcomingAdapter()
     lateinit var moviePopularAdapter: MoviePopularAdapter
 
     override fun onCreateView(
@@ -22,9 +22,9 @@ class FirstFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = FragmentFirstBinding.inflate(inflater, container, false)
+        binding = FragmentMovieListBinding.inflate(inflater, container, false)
 
-        view_model = MyViewModel(requireActivity().application)
+        view_model = MovieListViewModel(requireActivity().application)
 
         view_model!!.data.observe(viewLifecycleOwner) { user ->
             moviePopularAdapter = MoviePopularAdapter(user)

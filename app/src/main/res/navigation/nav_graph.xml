@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/MovieListFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="pe.com.test.FirstFragment"
+        android:id="@+id/MovieListFragment"
+        android:name="pe.com.test.ui.feature.home.list.MovieListFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_movie_list">
         <action
-            android:id="@+id/action_FirstFragment_to_DetailFragment"
-            app:destination="@id/DetailFragment" />
+            android:id="@+id/goToMovieDetail"
+            app:destination="@id/MovieDetailFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/DetailFragment"
-        android:name="pe.com.test.DetailFragment"
+        android:id="@+id/MovieDetailFragment"
+        android:name="pe.com.test.ui.feature.home.detail.MovieDetailFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_detail">
+        tools:layout="@layout/fragment_movie_detail">
     </fragment>
 
 </navigation>

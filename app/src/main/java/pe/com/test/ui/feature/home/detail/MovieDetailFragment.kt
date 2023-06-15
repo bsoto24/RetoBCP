@@ -1,4 +1,4 @@
-package pe.com.test
+package pe.com.test.ui.feature.home.detail
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -11,16 +11,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import pe.com.test.R
 import java.util.concurrent.Executors
 
-class DetailFragment : Fragment() {
+class MovieDetailFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
