@@ -1,5 +1,6 @@
 package pe.com.test.ui.feature.home.list
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,29 +13,53 @@ import pe.com.test.data.datasource.remote.entity.MovieUpcoming
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor(): ViewModel() {
+class MovieListViewModel @Inject constructor() : ViewModel() {
 
-    val data = MutableLiveData<List<MoviePopular?>>()
-    val movieUpcoming = MutableLiveData<List<MovieUpcoming?>>()
-    val error = MutableLiveData<Int>()
+    private val _popularMovies = MutableLiveData<List<MoviePopular?>>()
+    val popularMovies: LiveData<List<MoviePopular?>>
+        get() = _popularMovies
 
-    fun data() {
+    private val _upcomingMovies = MutableLiveData<List<MovieUpcoming?>>()
+    val upcomingMovies: LiveData<List<MovieUpcoming?>>
+        get() = _upcomingMovies
 
-        viewModelScope.launch {
-            val response =
-                ApiManager.get().popularMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
-            if (response.isSuccessful) {
-                data.value = response.body()!!.results
-            } else {
-                error.value = R.string.errorSearch
+    private val _error = MutableLiveData<Int>()
+    val error: LiveData<Int>
+        get() = _error
+
+    fun getPopularMovies() {
+        if (popularMovies.value.isNullOrEmpty()) {
+            viewModelScope.launch {
+                val response =
+                    ApiManager.get().popularMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
+                if (response.isSuccessful) {
+                    response.body()?.results?.let {
+                        _popularMovies.value = it
+                    } ?: run {
+                        _error.value = R.string.errorSearch
+                    }
+                } else {
+                    _error.value = R.string.errorSearch
+                }
             }
+        }
+    }
 
-            val movieUpcomingResponse = ApiManager.get()
-                .upcomingMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
-            if (response.isSuccessful) {
-                movieUpcoming.value = movieUpcomingResponse.body()!!.results
-            } else {
-                error.value = R.string.errorSearch
+    fun getUpcomingMovies() {
+        if (upcomingMovies.value.isNullOrEmpty()) {
+            viewModelScope.launch {
+                val response =
+                    ApiManager.get()
+                        .upcomingMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
+                if (response.isSuccessful) {
+                    response.body()?.results?.let {
+                        _upcomingMovies.value = it
+                    } ?: run {
+                        _error.value = R.string.errorSearch
+                    }
+                } else {
+                    _error.value = R.string.errorSearch
+                }
             }
         }
     }

@@ -36,13 +36,14 @@ class MovieListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
         setupObservers()
-        viewModel.data()
+        viewModel.getPopularMovies()
+        viewModel.getUpcomingMovies()
     }
 
     private fun setupObservers() {
-        viewModel.data.observe(viewLifecycleOwner) { moviePopularAdapter.submitList(it) }
+        viewModel.popularMovies.observe(viewLifecycleOwner) { moviePopularAdapter.submitList(it) }
 
-        viewModel.movieUpcoming.observe(viewLifecycleOwner) { movieUpcomingAdapter.submitList(it) }
+        viewModel.upcomingMovies.observe(viewLifecycleOwner) { movieUpcomingAdapter.submitList(it) }
 
         viewModel.error.observe(viewLifecycleOwner) { error ->
             Snackbar.make(binding.baseView, getString(error), Snackbar.LENGTH_LONG).show()
