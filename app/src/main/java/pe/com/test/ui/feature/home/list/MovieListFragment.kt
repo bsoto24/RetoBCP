@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +19,8 @@ class MovieListFragment : Fragment() {
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
 
-    var view_model: MovieListViewModel? = null
+    private val viewModel: MovieListViewModel by viewModels()
+
     private lateinit var movieUpcomingAdapter: MovieUpcomingAdapter
     private lateinit var moviePopularAdapter: MoviePopularAdapter
 
@@ -32,21 +34,18 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view_model = MovieListViewModel(requireActivity().application)
-
         setupAdapter()
         setupObservers()
-
-        view_model?.data()
+        viewModel.data()
     }
 
     private fun setupObservers() {
-        view_model?.data?.observe(viewLifecycleOwner) { moviePopularAdapter.submitList(it) }
+        viewModel.data.observe(viewLifecycleOwner) { moviePopularAdapter.submitList(it) }
 
-        view_model?.movieUpcoming?.observe(viewLifecycleOwner) { movieUpcomingAdapter.submitList(it) }
+        viewModel.movieUpcoming.observe(viewLifecycleOwner) { movieUpcomingAdapter.submitList(it) }
 
-        view_model?.error?.observe(viewLifecycleOwner) { error ->
-            Snackbar.make(binding.baseView, error, Snackbar.LENGTH_LONG).show()
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            Snackbar.make(binding.baseView, getString(error), Snackbar.LENGTH_LONG).show()
         }
     }
 

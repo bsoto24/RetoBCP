@@ -1,33 +1,32 @@
 package pe.com.test.ui.feature.home.list
 
-import android.annotation.SuppressLint
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import pe.com.test.data.datasource.remote.api.ApiManager
 import pe.com.test.R
+import pe.com.test.data.datasource.remote.api.ApiManager
 import pe.com.test.data.datasource.remote.entity.MoviePopular
 import pe.com.test.data.datasource.remote.entity.MovieUpcoming
+import javax.inject.Inject
 
-class MovieListViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class MovieListViewModel @Inject constructor(): ViewModel() {
 
     val data = MutableLiveData<List<MoviePopular?>>()
     val movieUpcoming = MutableLiveData<List<MovieUpcoming?>>()
-    val error = MutableLiveData<String>()
-
-    @SuppressLint("StaticFieldLeak")
-    val context = getApplication<Application>().applicationContext
+    val error = MutableLiveData<Int>()
 
     fun data() {
 
         viewModelScope.launch {
-            val response = ApiManager.get().popularMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
+            val response =
+                ApiManager.get().popularMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
             if (response.isSuccessful) {
                 data.value = response.body()!!.results
             } else {
-                error.value = context.getString(R.string.errorSearch)
+                error.value = R.string.errorSearch
             }
 
             val movieUpcomingResponse = ApiManager.get()
@@ -35,7 +34,7 @@ class MovieListViewModel(application: Application) : AndroidViewModel(applicatio
             if (response.isSuccessful) {
                 movieUpcoming.value = movieUpcomingResponse.body()!!.results
             } else {
-                error.value = context.getString(R.string.errorSearch)
+                error.value = R.string.errorSearch
             }
         }
     }
