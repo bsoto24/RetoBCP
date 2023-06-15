@@ -1,60 +1,57 @@
 package pe.com.test.ui.feature.home.list
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.os.bundleOf
-import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import pe.com.test.R
+import com.bumptech.glide.Glide
 import pe.com.test.data.datasource.remote.entity.MoviePopular
-import java.net.URL
-import java.util.concurrent.Executors
+import pe.com.test.databinding.ItemMoviePopularBinding
 
-class MoviePopularAdapter(val moviePopular: List<MoviePopular?>) :
-    RecyclerView.Adapter<MoviePopularAdapter.MoviePopularViewHolder>() {
+class MoviePopularAdapter(private val clickListener: (MoviePopular) -> Unit) :
+    ListAdapter<MoviePopular, MoviePopularAdapter.MoviePopularViewHolder>(MoviePopularDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviePopularViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_movie_popular, parent, false)
-        return MoviePopularViewHolder(view)
-    }
-
-    override fun getItemCount(): Int = moviePopular.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviePopularViewHolder =
+        MoviePopularViewHolder.from(parent)
 
     override fun onBindViewHolder(holder: MoviePopularViewHolder, position: Int) {
-        val item = moviePopular[position]
-        holder.bind(item!!)
-        val bundle = bundleOf("title" to item.title, "posterPath" to item.posterPath, "overview" to item.overview)
-        holder.itemView.setOnClickListener{ view ->
-            view.findNavController().navigate(R.id.goToMovieDetail, bundle)
+        getItem(position).let { movie ->
+            holder.bind(movie)
+            holder.itemView.setOnClickListener {
+                clickListener.invoke(movie)
+            }
         }
     }
 
-    class MoviePopularViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MoviePopularViewHolder(private val binding: ItemMoviePopularBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(moviePopular: MoviePopular) {
-            val image_view = itemView.findViewById<ImageView>(R.id.posterImageView)
-            val executor = Executors.newSingleThreadExecutor()
-            val handler = Handler(Looper.getMainLooper())
-            var image: Bitmap? = null
-            executor.execute {
-                val imageURL = "https://image.tmdb.org/t/p/w185/${moviePopular.posterPath}"
-                try {
-                    val `in` = URL(imageURL).openStream()
-                    image = BitmapFactory.decodeStream(`in`)
-                    handler.post {
-                        image_view.setImageBitmap(image)
-                    }
-                }
-                catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
+            Glide.with(binding.root.context)
+                .load("https://image.tmdb.org/t/p/w185/${moviePopular.posterPath}")
+                .into(binding.posterImageView)
         }
+
+        companion object {
+
+            fun from(parent: ViewGroup): MoviePopularViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemMoviePopularBinding.inflate(layoutInflater, parent, false)
+                return MoviePopularViewHolder(binding)
+            }
+
+        }
+    }
+
+    class MoviePopularDiffCallback : DiffUtil.ItemCallback<MoviePopular>() {
+
+        override fun areItemsTheSame(oldItem: MoviePopular, newItem: MoviePopular): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: MoviePopular, newItem: MoviePopular): Boolean {
+            return oldItem == newItem
+        }
+
     }
 }
