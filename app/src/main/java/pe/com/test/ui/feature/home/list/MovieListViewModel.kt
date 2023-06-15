@@ -7,14 +7,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pe.com.test.R
-import pe.com.test.data.datasource.remote.api.MovieApi
-import pe.com.test.data.datasource.remote.entity.MoviePopular
-import pe.com.test.data.datasource.remote.entity.MovieUpcoming
+import pe.com.test.data.entity.MoviePopular
+import pe.com.test.data.entity.MovieUpcoming
+import pe.com.test.data.repository.MovieRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
-    private val movieApi: MovieApi
+    private val movieRepository: MovieRepository
 ) : ViewModel() {
 
     private val _popularMovies = MutableLiveData<List<MoviePopular?>>()
@@ -32,17 +32,13 @@ class MovieListViewModel @Inject constructor(
     fun getPopularMovies() {
         if (popularMovies.value.isNullOrEmpty()) {
             viewModelScope.launch {
-                val response =
-                    movieApi.popularMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
-                if (response.isSuccessful) {
-                    response.body()?.results?.let {
+                movieRepository.getPopularMovies()
+                    .onSuccess {
                         _popularMovies.value = it
-                    } ?: run {
+                    }
+                    .onFailure {
                         _error.value = R.string.errorSearch
                     }
-                } else {
-                    _error.value = R.string.errorSearch
-                }
             }
         }
     }
@@ -50,17 +46,12 @@ class MovieListViewModel @Inject constructor(
     fun getUpcomingMovies() {
         if (upcomingMovies.value.isNullOrEmpty()) {
             viewModelScope.launch {
-                val response =
-                    movieApi.upcomingMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
-                if (response.isSuccessful) {
-                    response.body()?.results?.let {
+                movieRepository.getUpcomingMovies()
+                    .onSuccess {
                         _upcomingMovies.value = it
-                    } ?: run {
+                    }.onFailure {
                         _error.value = R.string.errorSearch
                     }
-                } else {
-                    _error.value = R.string.errorSearch
-                }
             }
         }
     }

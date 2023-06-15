@@ -39,7 +39,7 @@ class MovieListFragment : Fragment() {
         setupAdapter()
         setupObservers()
         viewModel.getPopularMovies()
-        viewModel.getUpcomingMovies()
+//        viewModel.getUpcomingMovies()
     }
 
     private fun setupObservers() {

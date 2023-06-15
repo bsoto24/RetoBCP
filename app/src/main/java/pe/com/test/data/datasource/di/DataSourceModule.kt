@@ -1,0 +1,25 @@
+package pe.com.test.data.datasource.di
+
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import pe.com.test.data.datasource.MovieDS
+import pe.com.test.data.datasource.MovieDSImpl
+
+
+/**
+ * DatasourceModule
+ *
+ * @author Bryam Soto
+ * @since 15/06/23
+ */
+@InstallIn(SingletonComponent::class)
+@Module
+abstract class DataSourceModule {
+
+ @Binds
+ abstract fun bindMovieDS(movieDSImpl: MovieDSImpl): MovieDS
+
+
+}

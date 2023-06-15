@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import pe.com.test.data.datasource.remote.entity.MovieUpcoming
+import pe.com.test.data.entity.MovieUpcoming
 import pe.com.test.databinding.ItemMovieUpcomingBinding
 
 class MovieUpcomingAdapter(private val clickListener: (MovieUpcoming) -> Unit) :
@@ -28,9 +28,9 @@ class MovieUpcomingAdapter(private val clickListener: (MovieUpcoming) -> Unit) :
 
     class MovieUpcomingViewHolder(private val binding: ItemMovieUpcomingBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movieUpcoming: MovieUpcoming) {
+        fun bind(movieUpcomingResponse: MovieUpcoming) {
             Glide.with(binding.root.context)
-                .load("https://image.tmdb.org/t/p/w185/${movieUpcoming.posterPath}")
+                .load("https://image.tmdb.org/t/p/w185/${movieUpcomingResponse.posterPath}")
                 .into(binding.posterImageView)
         }
 

@@ -1,7 +1,7 @@
 package pe.com.test.data.datasource.remote.api
 
-import pe.com.test.data.datasource.remote.entity.MoviePopularBase
-import pe.com.test.data.datasource.remote.entity.MovieUpcomingBase
+import pe.com.test.data.datasource.remote.response.MoviePopularBaseResponse
+import pe.com.test.data.datasource.remote.response.MovieUpcomingBaseResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -20,12 +20,12 @@ interface MovieApi {
         @Query("api_key") apiKey: String,
         @Query("page") page: String,
         @Query("language") language: String
-    ): Response<MoviePopularBase>
+    ): Response<MoviePopularBaseResponse>
 
     @GET("3/movie/upcoming")
     suspend fun upcomingMovies(
         @Query("api_key") apiKey: String,
         @Query("page") page: String,
         @Query("language") language: String
-    ): Response<MovieUpcomingBase>
+    ): Response<MovieUpcomingBaseResponse>
 }

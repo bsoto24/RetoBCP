@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import pe.com.test.data.datasource.remote.entity.MoviePopular
+import pe.com.test.data.entity.MoviePopular
 import pe.com.test.databinding.ItemMoviePopularBinding
 
 class MoviePopularAdapter(private val clickListener: (MoviePopular) -> Unit) :
