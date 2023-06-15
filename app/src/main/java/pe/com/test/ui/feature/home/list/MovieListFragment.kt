@@ -15,7 +15,9 @@ import pe.com.test.databinding.FragmentMovieListBinding
 
 class MovieListFragment : Fragment() {
 
-    private var binding: FragmentMovieListBinding? = null
+    private var _binding: FragmentMovieListBinding? = null
+    private val binding get() = _binding!!
+
     var view_model: MovieListViewModel? = null
     private lateinit var movieUpcomingAdapter: MovieUpcomingAdapter
     private lateinit var moviePopularAdapter: MoviePopularAdapter
@@ -24,8 +26,8 @@ class MovieListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMovieListBinding.inflate(inflater, container, false)
-        return binding?.root
+        _binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,9 +46,7 @@ class MovieListFragment : Fragment() {
         view_model?.movieUpcoming?.observe(viewLifecycleOwner) { movieUpcomingAdapter.submitList(it) }
 
         view_model?.error?.observe(viewLifecycleOwner) { error ->
-            binding?.let {
-                Snackbar.make(it.baseView, error, Snackbar.LENGTH_LONG).show()
-            }
+            Snackbar.make(binding.baseView, error, Snackbar.LENGTH_LONG).show()
         }
     }
 
@@ -71,7 +71,7 @@ class MovieListFragment : Fragment() {
             )
         }
 
-        binding?.apply {
+        binding.apply {
             moviePopularRecyclerView.layoutManager =
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             moviePopularRecyclerView.adapter = moviePopularAdapter
@@ -85,6 +85,7 @@ class MovieListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
+
 }

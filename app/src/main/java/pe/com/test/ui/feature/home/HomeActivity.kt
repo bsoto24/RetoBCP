@@ -1,11 +1,10 @@
 package pe.com.test.ui.feature.home
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import pe.com.test.ui.feature.home.list.MovieListFragment
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import pe.com.test.R
 import pe.com.test.databinding.ActivityHomeBinding
 
