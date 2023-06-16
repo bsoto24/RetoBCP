@@ -1,7 +1,9 @@
 package pe.com.test.data.datasource.remote.response
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class MoviePopularResponse(
     @SerializedName("popularity") val popularity: Double,
     @SerializedName("vote_count") val voteCount: Int,

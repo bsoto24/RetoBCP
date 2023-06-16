@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import pe.com.test.common.BASE_URL_IMAGE
 import pe.com.test.databinding.FragmentMovieDetailBinding
 
 class MovieDetailFragment : Fragment() {
 
+    private val args: MovieDetailFragmentArgs by navArgs()
+
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
-    
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,10 +32,10 @@ class MovieDetailFragment : Fragment() {
 
     private fun setupUI() {
         binding.apply {
-            textViewName.text = arguments?.getString("title", "")
-            textViewDescription.text = arguments?.getString("overview", "")
+            textViewName.text = args.title
+            textViewDescription.text = args.overview
             Glide.with(requireContext())
-                .load("https://image.tmdb.org/t/p/w185/${arguments?.getString("posterPath")}")
+                .load("$BASE_URL_IMAGE${args.posterPath}")
                 .into(binding.imageViewPoster)
         }
     }

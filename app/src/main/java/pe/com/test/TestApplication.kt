@@ -11,4 +11,4 @@ import dagger.hilt.android.HiltAndroidApp
  * @since 15/06/23
  */
 @HiltAndroidApp
-class TestApplication : Application() {}
+class TestApplication : Application()

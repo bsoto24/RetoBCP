@@ -1,18 +1,16 @@
 package pe.com.test.ui.feature.home.list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import pe.com.test.R
 import pe.com.test.databinding.FragmentMovieListBinding
 
 @AndroidEntryPoint
@@ -55,20 +53,20 @@ class MovieListFragment : Fragment() {
     private fun setupAdapter() {
         moviePopularAdapter = MoviePopularAdapter {
             findNavController().navigate(
-                R.id.goToMovieDetail, bundleOf(
-                    "title" to it.title,
-                    "posterPath" to it.posterPath,
-                    "overview" to it.overview
+                MovieListFragmentDirections.goToMovieDetail(
+                    it.title,
+                    it.posterPath,
+                    it.overview
                 )
             )
         }
 
         movieUpcomingAdapter = MovieUpcomingAdapter {
             findNavController().navigate(
-                R.id.goToMovieDetail, bundleOf(
-                    "title" to it.title,
-                    "posterPath" to it.posterPath,
-                    "overview" to it.overview
+                MovieListFragmentDirections.goToMovieDetail(
+                    it.title,
+                    it.posterPath,
+                    it.overview
                 )
             )
         }

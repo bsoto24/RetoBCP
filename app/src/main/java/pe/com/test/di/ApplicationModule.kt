@@ -4,8 +4,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import pe.com.test.common.API_KEY
+import pe.com.test.common.BASE_URL_API
 import pe.com.test.data.datasource.remote.api.MovieApiModule
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,9 +31,27 @@ object ApplicationModule {
     }
 
     @Provides
-    fun provideClient(logging: HttpLoggingInterceptor): OkHttpClient =
+    fun provideRequestInterceptor(): Interceptor = Interceptor {
+        val url = it.request()
+            .url
+            .newBuilder()
+            .addQueryParameter("api_key", API_KEY)
+            .build()
+        val request = it.request()
+            .newBuilder()
+            .url(url)
+            .build()
+        return@Interceptor it.proceed(request)
+    }
+
+    @Provides
+    fun provideClient(
+        requestInterceptor: Interceptor,
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor(logging)
+            .addInterceptor(requestInterceptor)
+            .addInterceptor(loggingInterceptor)
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
@@ -38,7 +59,7 @@ object ApplicationModule {
 
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org")
+        .baseUrl(BASE_URL_API)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

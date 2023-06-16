@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import pe.com.test.common.BASE_URL_IMAGE
 import pe.com.test.databinding.ItemMoviePopularBinding
 import pe.com.test.domain.movie.entity.Movie
 
@@ -27,7 +28,7 @@ class MoviePopularAdapter(private val clickListener: (Movie) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             Glide.with(binding.root.context)
-                .load("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
+                .load("$BASE_URL_IMAGE${movie.posterPath}")
                 .into(binding.posterImageView)
         }
 

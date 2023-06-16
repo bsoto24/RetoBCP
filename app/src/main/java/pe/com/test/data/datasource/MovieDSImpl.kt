@@ -19,7 +19,7 @@ class MovieDSImpl @Inject constructor(
 
     override suspend fun getPopularMovies(): Result<List<Movie>> {
         return parseApiCall {
-            movieApi.popularMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
+            movieApi.popularMovies("1", "en-US")
         }.map { response ->
             response.results.map { it.toDomain() }
         }
@@ -27,7 +27,7 @@ class MovieDSImpl @Inject constructor(
 
     override suspend fun getUpcomingMovies(): Result<List<Movie>> {
         return parseApiCall {
-            movieApi.upcomingMovies("d9ae4921794c06bd0fdbd1463d274804", "1", "en-US")
+            movieApi.upcomingMovies("1", "en-US")
         }.map { response ->
             response.results.map { it.toDomain() }
         }
