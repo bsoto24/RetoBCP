@@ -17,8 +17,8 @@ class MovieUpcomingUC @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
 
-    suspend operator fun invoke(): Result<List<Movie>> {
-        return movieRepository.getUpcomingMovies().map { list ->
+    suspend operator fun invoke(page: Int): Result<List<Movie>> {
+        return movieRepository.getUpcomingMovies(page).map { list ->
             list.filter { notReleasedYet(it.releaseDate) }.sortedBy { it.releaseDate.toDate() }
         }
     }

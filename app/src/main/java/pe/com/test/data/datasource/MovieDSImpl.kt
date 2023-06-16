@@ -17,19 +17,19 @@ class MovieDSImpl @Inject constructor(
     private val movieApi: MovieApi
 ) : MovieDS {
 
-    override suspend fun getPopularMovies(): Result<List<Movie>> {
+    override suspend fun getPopularMovies(page: Int): Result<List<Movie>> {
         return parseApiCall {
-            movieApi.popularMovies("1", "en-US")
+            movieApi.popularMovies(page, "en-US")
         }.map { response ->
-            response.results.map { it.toDomain() }
+            response.results?.map { it.toDomain() } ?: listOf()
         }
     }
 
-    override suspend fun getUpcomingMovies(): Result<List<Movie>> {
+    override suspend fun getUpcomingMovies(page: Int): Result<List<Movie>> {
         return parseApiCall {
-            movieApi.upcomingMovies("1", "en-US")
+            movieApi.upcomingMovies(page, "en-US")
         }.map { response ->
-            response.results.map { it.toDomain() }
+            response.results?.map { it.toDomain() } ?: listOf()
         }
     }
 }

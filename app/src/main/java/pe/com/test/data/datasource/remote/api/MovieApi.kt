@@ -17,13 +17,13 @@ interface MovieApi {
 
     @GET("3/movie/popular")
     suspend fun popularMovies(
-        @Query("page") page: String,
+        @Query("page") page: Int,
         @Query("language") language: String
     ): Response<MoviePopularBaseResponse>
 
     @GET("3/movie/upcoming")
     suspend fun upcomingMovies(
-        @Query("page") page: String,
+        @Query("page") page: Int,
         @Query("language") language: String
     ): Response<MovieUpcomingBaseResponse>
 }

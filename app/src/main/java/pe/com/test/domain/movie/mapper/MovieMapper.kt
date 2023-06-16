@@ -13,35 +13,35 @@ import pe.com.test.domain.movie.entity.Movie
  */
 
 fun MoviePopularResponse.toDomain() = Movie(
-    popularity,
-    video,
-    voteCount,
-    id,
-    posterPath,
-    adult,
-    backdropPath,
-    originalLanguage,
-    originalTitle,
-    genreIds,
-    title,
-    voteAverage,
-    overview,
-    releaseDate
+    popularity ?: 0.0,
+    video ?: false,
+    voteCount ?: 0,
+    id ?: 0,
+    posterPath ?: "",
+    adult ?: false,
+    backdropPath ?: "",
+    originalLanguage ?: "",
+    originalTitle ?: "",
+    genreIds ?: listOf(),
+    title ?: "",
+    voteAverage ?: 0.0,
+    overview ?: "",
+    releaseDate ?: ""
 )
 
 fun MovieUpcomingResponse.toDomain() = Movie(
-    popularity,
-    video,
-    voteCount,
-    id,
-    posterPath,
-    adult,
-    backdropPath,
-    originalLanguage,
-    originalTitle,
-    genreIds,
-    title,
-    voteAverage,
-    overview,
-    releaseDate
+    popularity ?: 0.0,
+    video ?: false,
+    voteCount ?: 0,
+    id ?: 0,
+    posterPath ?: "",
+    adult ?: false,
+    backdropPath ?: "",
+    originalLanguage ?: "",
+    originalTitle ?: "",
+    genreIds ?: listOf(),
+    title ?: "",
+    voteAverage ?: 0.0,
+    overview ?: "",
+    releaseDate ?: ""
 )

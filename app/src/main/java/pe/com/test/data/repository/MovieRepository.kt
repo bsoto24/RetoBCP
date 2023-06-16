@@ -11,8 +11,8 @@ import pe.com.test.domain.movie.entity.Movie
  */
 interface MovieRepository {
 
-    suspend fun getPopularMovies(): Result<List<Movie>>
+    suspend fun getPopularMovies(page: Int): Result<List<Movie>>
 
-    suspend fun getUpcomingMovies(): Result<List<Movie>>
+    suspend fun getUpcomingMovies(page: Int): Result<List<Movie>>
 
 }

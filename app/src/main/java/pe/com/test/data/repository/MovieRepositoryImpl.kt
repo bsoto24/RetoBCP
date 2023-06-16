@@ -15,12 +15,12 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieDS: MovieDS
 ) : MovieRepository {
 
-    override suspend fun getPopularMovies(): Result<List<Movie>> {
-        return movieDS.getPopularMovies()
+    override suspend fun getPopularMovies(page: Int): Result<List<Movie>> {
+        return movieDS.getPopularMovies(page)
     }
 
-    override suspend fun getUpcomingMovies(): Result<List<Movie>> {
-        return movieDS.getUpcomingMovies()
+    override suspend fun getUpcomingMovies(page: Int): Result<List<Movie>> {
+        return movieDS.getUpcomingMovies(page)
     }
 
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pe.com.test.databinding.FragmentMovieListBinding
+import pe.com.test.ui.util.Paginator
 
 @AndroidEntryPoint
 class MovieListFragment : Fragment() {
@@ -81,6 +82,37 @@ class MovieListFragment : Fragment() {
             rvMovieUpcoming.layoutManager =
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             rvMovieUpcoming.adapter = movieUpcomingAdapter
+
+            rvMoviePopular.addOnScrollListener(object :
+                Paginator(rvMoviePopular.layoutManager as LinearLayoutManager) {
+                override fun hasNext(): Boolean {
+                    return viewModel.popularMoviePager.hasNext
+                }
+
+                override fun isLoading(): Boolean {
+                    return viewModel.popularMoviePager.isLoading
+                }
+
+                override fun loadMoreItems() {
+                    viewModel.getPopularMovies(true)
+                }
+            })
+
+            rvMovieUpcoming.addOnScrollListener(object :
+                Paginator(rvMovieUpcoming.layoutManager as LinearLayoutManager) {
+                override fun hasNext(): Boolean {
+                    return viewModel.upcomingMoviePager.hasNext
+                }
+
+                override fun isLoading(): Boolean {
+                    return viewModel.upcomingMoviePager.isLoading
+                }
+
+                override fun loadMoreItems() {
+                    viewModel.getUpcomingMovies(true)
+                }
+
+            })
         }
 
     }

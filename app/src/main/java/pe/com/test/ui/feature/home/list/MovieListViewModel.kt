@@ -30,27 +30,44 @@ class MovieListViewModel @Inject constructor(
     val error: LiveData<Int>
         get() = _error
 
-    fun getPopularMovies() {
-        if (popularMovies.value.isNullOrEmpty()) {
+    var popularMoviePager = MoviePager()
+    var upcomingMoviePager = MoviePager()
+
+    fun getPopularMovies(pagination: Boolean = false) {
+        if (popularMovies.value.isNullOrEmpty() || pagination) {
             viewModelScope.launch {
-                moviePopularUC()
+                popularMoviePager.isLoading = true
+                moviePopularUC(popularMoviePager.page)
                     .onSuccess {
-                        _popularMovies.value = it
+                        val previousList = popularMovies.value ?: listOf()
+                        val newList = previousList + it
+                        popularMoviePager.page++
+                        _popularMovies.value = newList
+                        popularMoviePager.isLoading = false
                     }
                     .onFailure {
+                        popularMoviePager.hasNext = true
+                        popularMoviePager.isLoading = false
                         _error.value = R.string.errorSearch
                     }
             }
         }
     }
 
-    fun getUpcomingMovies() {
-        if (upcomingMovies.value.isNullOrEmpty()) {
+    fun getUpcomingMovies(pagination: Boolean = false) {
+        if (upcomingMovies.value.isNullOrEmpty() || pagination) {
             viewModelScope.launch {
-                movieUpcomingUC()
+                upcomingMoviePager.isLoading = true
+                movieUpcomingUC(upcomingMoviePager.page)
                     .onSuccess {
-                        _upcomingMovies.value = it
+                        val previousList = upcomingMovies.value ?: listOf()
+                        val newList = previousList + it
+                        upcomingMoviePager.page++
+                        _upcomingMovies.value = newList
+                        upcomingMoviePager.isLoading = false
                     }.onFailure {
+                        upcomingMoviePager.hasNext = true
+                        upcomingMoviePager.isLoading = false
                         _error.value = R.string.errorSearch
                     }
             }

@@ -15,8 +15,8 @@ class MoviePopularUC @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
 
-    suspend operator fun invoke(): Result<List<Movie>> {
-        return movieRepository.getPopularMovies()
+    suspend operator fun invoke(page: Int): Result<List<Movie>> {
+        return movieRepository.getPopularMovies(page)
             .map { list -> list.sortedByDescending { it.popularity } }
     }
 
