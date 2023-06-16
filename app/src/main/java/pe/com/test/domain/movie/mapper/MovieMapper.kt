@@ -1,9 +1,8 @@
-package pe.com.test.data.mapper
+package pe.com.test.domain.movie.mapper
 
 import pe.com.test.data.datasource.remote.response.MoviePopularResponse
 import pe.com.test.data.datasource.remote.response.MovieUpcomingResponse
-import pe.com.test.data.entity.MoviePopular
-import pe.com.test.data.entity.MovieUpcoming
+import pe.com.test.domain.movie.entity.Movie
 
 
 /**
@@ -13,7 +12,7 @@ import pe.com.test.data.entity.MovieUpcoming
  * @since 15/06/23
  */
 
-fun MoviePopularResponse.toDomain() = MoviePopular(
+fun MoviePopularResponse.toDomain() = Movie(
     popularity,
     video,
     voteCount,
@@ -30,12 +29,12 @@ fun MoviePopularResponse.toDomain() = MoviePopular(
     releaseDate
 )
 
-fun MovieUpcomingResponse.toDomain() = MovieUpcoming(
+fun MovieUpcomingResponse.toDomain() = Movie(
     popularity,
-    voteCount,
     video,
-    posterPath,
+    voteCount,
     id,
+    posterPath,
     adult,
     backdropPath,
     originalLanguage,

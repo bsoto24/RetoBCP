@@ -7,22 +7,23 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pe.com.test.R
-import pe.com.test.data.entity.MoviePopular
-import pe.com.test.data.entity.MovieUpcoming
-import pe.com.test.data.repository.MovieRepository
+import pe.com.test.domain.movie.entity.Movie
+import pe.com.test.domain.movie.usecase.MoviePopularUC
+import pe.com.test.domain.movie.usecase.MovieUpcomingUC
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val moviePopularUC: MoviePopularUC,
+    private val movieUpcomingUC: MovieUpcomingUC
 ) : ViewModel() {
 
-    private val _popularMovies = MutableLiveData<List<MoviePopular?>>()
-    val popularMovies: LiveData<List<MoviePopular?>>
+    private val _popularMovies = MutableLiveData<List<Movie?>>()
+    val popularMovies: LiveData<List<Movie?>>
         get() = _popularMovies
 
-    private val _upcomingMovies = MutableLiveData<List<MovieUpcoming?>>()
-    val upcomingMovies: LiveData<List<MovieUpcoming?>>
+    private val _upcomingMovies = MutableLiveData<List<Movie?>>()
+    val upcomingMovies: LiveData<List<Movie?>>
         get() = _upcomingMovies
 
     private val _error = MutableLiveData<Int>()
@@ -32,7 +33,7 @@ class MovieListViewModel @Inject constructor(
     fun getPopularMovies() {
         if (popularMovies.value.isNullOrEmpty()) {
             viewModelScope.launch {
-                movieRepository.getPopularMovies()
+                moviePopularUC()
                     .onSuccess {
                         _popularMovies.value = it
                     }
@@ -46,7 +47,7 @@ class MovieListViewModel @Inject constructor(
     fun getUpcomingMovies() {
         if (upcomingMovies.value.isNullOrEmpty()) {
             viewModelScope.launch {
-                movieRepository.getUpcomingMovies()
+                movieUpcomingUC()
                     .onSuccess {
                         _upcomingMovies.value = it
                     }.onFailure {

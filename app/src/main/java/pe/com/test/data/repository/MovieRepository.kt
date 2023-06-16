@@ -1,7 +1,6 @@
 package pe.com.test.data.repository
 
-import pe.com.test.data.entity.MoviePopular
-import pe.com.test.data.entity.MovieUpcoming
+import pe.com.test.domain.movie.entity.Movie
 
 
 /**
@@ -12,8 +11,8 @@ import pe.com.test.data.entity.MovieUpcoming
  */
 interface MovieRepository {
 
-    suspend fun getPopularMovies(): Result<List<MoviePopular>>
+    suspend fun getPopularMovies(): Result<List<Movie>>
 
-    suspend fun getUpcomingMovies(): Result<List<MovieUpcoming>>
+    suspend fun getUpcomingMovies(): Result<List<Movie>>
 
 }

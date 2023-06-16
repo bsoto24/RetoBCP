@@ -2,15 +2,14 @@ package pe.com.test.ui.feature.home.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import pe.com.test.data.entity.MoviePopular
 import pe.com.test.databinding.ItemMoviePopularBinding
+import pe.com.test.domain.movie.entity.Movie
 
-class MoviePopularAdapter(private val clickListener: (MoviePopular) -> Unit) :
-    ListAdapter<MoviePopular, MoviePopularAdapter.MoviePopularViewHolder>(MoviePopularDiffCallback()) {
+class MoviePopularAdapter(private val clickListener: (Movie) -> Unit) :
+    ListAdapter<Movie, MoviePopularAdapter.MoviePopularViewHolder>(MovieDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviePopularViewHolder =
         MoviePopularViewHolder.from(parent)
@@ -26,9 +25,9 @@ class MoviePopularAdapter(private val clickListener: (MoviePopular) -> Unit) :
 
     class MoviePopularViewHolder(private val binding: ItemMoviePopularBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(moviePopular: MoviePopular) {
+        fun bind(movie: Movie) {
             Glide.with(binding.root.context)
-                .load("https://image.tmdb.org/t/p/w185/${moviePopular.posterPath}")
+                .load("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
                 .into(binding.posterImageView)
         }
 
@@ -43,15 +42,4 @@ class MoviePopularAdapter(private val clickListener: (MoviePopular) -> Unit) :
         }
     }
 
-    class MoviePopularDiffCallback : DiffUtil.ItemCallback<MoviePopular>() {
-
-        override fun areItemsTheSame(oldItem: MoviePopular, newItem: MoviePopular): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: MoviePopular, newItem: MoviePopular): Boolean {
-            return oldItem == newItem
-        }
-
-    }
 }

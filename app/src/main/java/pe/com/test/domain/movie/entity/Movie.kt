@@ -1,6 +1,6 @@
-package pe.com.test.data.entity
+package pe.com.test.domain.movie.entity
 
-data class MoviePopular(
+data class Movie(
     val popularity: Double,
     val video: Boolean,
     val voteCount: Int,
