@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import pe.com.test.common.BASE_URL_IMAGE
 import pe.com.test.databinding.ItemMovieUpcomingBinding
 import pe.com.test.domain.movie.entity.Movie
+import pe.com.test.ui.util.getShortDate
 
 class MovieUpcomingAdapter(private val clickListener: (Movie) -> Unit) :
     ListAdapter<Movie, MovieUpcomingAdapter.MovieUpcomingViewHolder>(
@@ -28,9 +29,10 @@ class MovieUpcomingAdapter(private val clickListener: (Movie) -> Unit) :
 
     class MovieUpcomingViewHolder(private val binding: ItemMovieUpcomingBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movieUpcomingResponse: Movie) {
+        fun bind(movie: Movie) {
+            binding.tvReleaseDate.text = getShortDate(movie.releaseDate)
             Glide.with(binding.root.context)
-                .load("$BASE_URL_IMAGE${movieUpcomingResponse.posterPath}")
+                .load("$BASE_URL_IMAGE${movie.posterPath}")
                 .into(binding.posterImageView)
         }
 

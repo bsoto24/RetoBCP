@@ -27,6 +27,7 @@ class MoviePopularAdapter(private val clickListener: (Movie) -> Unit) :
     class MoviePopularViewHolder(private val binding: ItemMoviePopularBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
+            binding.tvRanking.text = "#${adapterPosition + 1}"
             Glide.with(binding.root.context)
                 .load("$BASE_URL_IMAGE${movie.posterPath}")
                 .into(binding.posterImageView)

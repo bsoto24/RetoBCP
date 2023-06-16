@@ -56,6 +56,7 @@ class MovieListFragment : Fragment() {
                 MovieListFragmentDirections.goToMovieDetail(
                     it.title,
                     it.posterPath,
+                    it.backdropPath,
                     it.overview
                 )
             )
@@ -66,19 +67,20 @@ class MovieListFragment : Fragment() {
                 MovieListFragmentDirections.goToMovieDetail(
                     it.title,
                     it.posterPath,
+                    it.backdropPath,
                     it.overview
                 )
             )
         }
 
         binding.apply {
-            moviePopularRecyclerView.layoutManager =
+            rvMoviePopular.layoutManager =
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            moviePopularRecyclerView.adapter = moviePopularAdapter
+            rvMoviePopular.adapter = moviePopularAdapter
 
-            movieUpcomingRecyclerView.layoutManager =
+            rvMovieUpcoming.layoutManager =
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            movieUpcomingRecyclerView.adapter = movieUpcomingAdapter
+            rvMovieUpcoming.adapter = movieUpcomingAdapter
         }
 
     }

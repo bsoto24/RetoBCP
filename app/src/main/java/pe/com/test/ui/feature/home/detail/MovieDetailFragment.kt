@@ -35,6 +35,9 @@ class MovieDetailFragment : Fragment() {
             textViewName.text = args.title
             textViewDescription.text = args.overview
             Glide.with(requireContext())
+                .load("$BASE_URL_IMAGE${args.backdropPath}")
+                .into(binding.imageViewBackground)
+            Glide.with(requireContext())
                 .load("$BASE_URL_IMAGE${args.posterPath}")
                 .into(binding.imageViewPoster)
         }
